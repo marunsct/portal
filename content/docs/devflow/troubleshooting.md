@@ -32,10 +32,12 @@ initialised with a different password, either restore that password or remove
 Cause: another process on the host uses 8000. Fix: set `APP_PORT=8080` (or any free
 port) in `.env`; the container keeps listening on 8000 internally. Update the proxy.
 
-**`worker` stays `starting` or `unhealthy`.**
-Cause: the healthcheck is `celery inspect ping`, which needs Redis and about 40 seconds;
-a worker that cannot reach Redis never answers. Fix: check `docker compose logs redis`
-and `REDIS_URL`. Wait for the start period before judging.
+**The worker is killed with `WorkerLostError: ... signal 9` while a product's tests run.**
+Cause: the worker container hit its 8 GB memory limit. JavaScript test runners fork one
+process per CPU and each may take `SANDBOX_MEMORY_LIMIT`; per-process limits do not
+bound the tree, so the container limit is the real ceiling. Fix: keep
+`SANDBOX_MEMORY_LIMIT` at `1g` or lower, or raise the worker's limit in `compose.yaml`;
+the orphaned run is recovered at the next worker start.
 
 ## Model server
 
@@ -103,14 +105,18 @@ page falls back to polling, so stages still advance.
 Cause: the interface calls `/api` relative to the origin root. Fix: give DevFlow its
 own hostname; sub-path hosting is not supported.
 
-**Embedding the interface in another page shows a blank frame.**
-Cause: `X-Frame-Options: DENY`. Fix: link to it instead; framing is refused by design.
+**Every API call returns 429 `Too many requests` once a few people use it.**
+Cause: behind a reverse proxy every request arrives from the proxy's address, so one
+budget of 300 requests a minute is shared by all users. Fix: set `TRUSTED_PROXIES` to
+the proxy's CIDR so `X-Forwarded-For` is honoured and each client gets its own budget.
 
-**Development settings refused in production: `ENV=dev` does not relax anything on the server.**
-Cause: the relaxed values are exactly `dev`, `development`, `test`, `testing`; the
-compose file defaults `ENV` to `production`, and an unknown value fails closed. Fix: do
-not relax production; for a workstation use the development override file with the
-documented values.
+**The stack refuses to start with the development defaults, or sign-in with `admin` / `admin` fails.**
+Cause: the development override file's throwaway values (a fixed `JWT_SECRET_KEY`,
+`ADMIN_PASSWORD=admin`, an ephemeral key when none is set) are only honoured when
+`ENV` is exactly `dev`, `development`, `test` or `testing`. The production compose file
+sets `ENV=production`, and any other value fails closed. Fix: in production set real
+secrets; the admin password is whatever `ADMIN_PASSWORD` was on the first start, and
+`manage reset-password admin` changes it.
 
 ## Metrics and logs
 

@@ -137,12 +137,6 @@ Yes. Set every model variable in `.env` and `SETTINGS_READ_ONLY=true`; the Setti
 page becomes read-only and the API refuses provider and credential changes.
 `ALLOWED_MODEL_HOSTS` additionally pins which hosts a base URL may name.
 
-## Can I host it under a sub-path or inside another page?
-
-No. The interface calls `/api` relative to the origin root and opens its WebSocket on
-the page's host, so it needs a hostname of its own. It sends `X-Frame-Options: DENY`,
-so it cannot be embedded in an iframe.
-
 ## Does DevFlow build the container images it writes?
 
 No. For services it writes a `Dockerfile` and `.dockerignore` at release, and a GitHub
