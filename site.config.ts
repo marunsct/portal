@@ -6,6 +6,9 @@
  * environment variables at runtime with the defaults below. See .env.example.
  */
 
+// Works in the browser bundle too, where `process` does not exist.
+const env: Record<string, string | undefined> = typeof process !== "undefined" ? process.env : {};
+
 export const company = {
   // Working name. Alternatives considered: "Localhost Works", "Homeground AI", "Keelstack".
   name: "Ownstack",
@@ -24,16 +27,16 @@ export const company = {
   },
   github: "https://github.com/marunsct",
   // Public domain the portal is served from. Used in canonical links and metadata.
-  domain: process.env.PUBLIC_DOMAIN ?? "ownstack.example",
+  domain: env.PUBLIC_DOMAIN ?? "ownstack.example",
 };
 
 /** Demo hosts: one hostname per product, under the demo sub-zone. */
 export const demo = {
-  zone: process.env.DEMO_ZONE ?? `demo.${company.domain}`,
-  scheme: process.env.DEMO_SCHEME ?? "https",
-  sessionMinutes: Number(process.env.DEMO_SESSION_MINUTES ?? 45),
-  maxConcurrent: Number(process.env.DEMO_MAX_CONCURRENT ?? 5),
-  requireEmail: (process.env.DEMO_REQUIRE_EMAIL ?? "false") === "true",
+  zone: env.DEMO_ZONE ?? `demo.${company.domain}`,
+  scheme: env.DEMO_SCHEME ?? "https",
+  sessionMinutes: Number(env.DEMO_SESSION_MINUTES ?? 45),
+  maxConcurrent: Number(env.DEMO_MAX_CONCURRENT ?? 5),
+  requireEmail: (env.DEMO_REQUIRE_EMAIL ?? "false") === "true",
   cookieName: "ownstack_demo",
   hosts: {
     devflow: "devflow",

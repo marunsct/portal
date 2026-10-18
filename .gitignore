@@ -1,10 +1,8 @@
-node_modules
-.next
-out
-data
-.env
 *.log
 .DS_Store
-tsconfig.tsbuildinfo
-next-env.d.ts
+.env
+data
+dist
+node_modules
 scripts/products/
+tsconfig.tsbuildinfo

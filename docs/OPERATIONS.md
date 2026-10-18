@@ -108,14 +108,14 @@ demos as offline during that time.
 
 Back them up with `docker compose cp portal:/data ./backup-$(date +%F)`. Import into a CRM
 or helpdesk at your leisure; the format is one JSON object per line. When volume justifies
-it, replace `lib/store.ts` with a Postgres table; nothing else depends on the file format.
+it, replace `src/lib/store.ts` with a Postgres table; nothing else depends on the file format.
 
 ## 9. Self-hosting the fonts
 
 The layout links Google Fonts for Bricolage Grotesque, IBM Plex Sans and IBM Plex Mono.
 To serve them yourself: download the woff2 files (Google Fonts or the projects' GitHub
 releases), put them under `public/fonts/`, add `@font-face` rules at the top of
-`app/globals.css`, and delete the three `<link>` tags in `app/layout.tsx`. Then update the
+`src/styles/globals.css`, and delete the three `<link>` tags in `src/server/page.tsx`. Then update the
 privacy policy sentence about fonts in `content/legal/privacy.md`.
 
 ## 10. Running the products on a different machine
@@ -129,8 +129,8 @@ visitor's IP rather than the gateway's. Keep those ports closed to the internet.
 
 - Host labels: `site.config.ts` → `demo.hosts`, plus a matching site block in
   `gateway/Caddyfile` and an `*_UPSTREAM` variable in `docker-compose.yml`.
-- A new product: add it to `lib/products.ts` (everything on the site derives from that
-  entry), add `content/docs/<id>/` pages, and extend `app/api/demo/status/route.ts`
+- A new product: add it to `src/lib/products.ts` (everything on the site derives from that
+  entry), add `content/docs/<id>/` pages, and extend `src/api/demo-status.ts`
   with its health path.
 
 ## 12. Known rough edges
@@ -144,3 +144,8 @@ visitor's IP rather than the gateway's. Keep those ports closed to the internet.
   in a new tab for that reason. Do not try to iframe them.
 - The concurrency counter is per portal process and file-based. Fine for one replica; move
   to a shared store before running several portal replicas.
+- Local testing with `*.localhost`: the demo cookie is set with `Domain=.localhost`. Firefox
+  and Safari accept it; some Chrome versions drop cookies with a `localhost` domain. If the
+  demo hosts keep redirecting you to the launch page in Chrome, add a line such as
+  `127.0.0.1 www.ownstack.test devflow.demo.ownstack.test canvas.demo.ownstack.test matura.demo.ownstack.test`
+  to `/etc/hosts` and set `PUBLIC_DOMAIN=ownstack.test`, `DEMO_ZONE=demo.ownstack.test`.

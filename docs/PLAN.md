@@ -228,7 +228,8 @@ resolve to 127.0.0.1: `http://www.localhost`, `http://devflow.demo.localhost`, e
   challenge optional), routes by host, and asks the portal whether a request to a demo
   host carries a valid demo session (`forward_auth`). WebSockets and SSE pass through
   (Caddy streams by default; `flush_interval -1` set for the API paths).
-- **Portal** is a Next.js 15 app (`output: standalone`, ~150 MB image): marketing pages,
+- **Portal** is a small Node service (server-rendered React, esbuild-bundled islands):
+  marketing pages,
   product pages, documentation rendered from Markdown in `content/`, help centre, support
   form, pricing, legal, changelog, and the demo launcher API.
 - **Products** run wherever the owner runs them. Default upstreams point at
@@ -296,7 +297,7 @@ What "limited" means in practice, and what the launch pages say:
 
 | Choice | Why |
 |---|---|
-| Next.js 15 (App Router, TypeScript) | Static marketing pages + a few server routes (demo, support) in one deployable; `output: standalone` gives a small Docker image |
+| React rendered on the server + esbuild islands + `node:http` (TypeScript) | Marketing pages, docs and five API routes do not need a framework; four runtime dependencies, a ~60 MB image, nothing to upgrade. Next.js was the first choice and was dropped during the build because the registry was unreachable; the replacement is simpler and was kept on its merits |
 | Markdown content in `content/` rendered with `marked` + `shiki`-free highlighting | Docs editable without touching React; no CMS to run |
 | Caddy 2 as the gateway | Hostname routing, automatic TLS, `forward_auth` in six lines; no Lua, no nginx auth_request boilerplate |
 | JSON-lines files on a `/data` volume | Leads and tickets without a database; trivially backed up; upgrade path to Postgres noted |
@@ -322,7 +323,7 @@ moss (status) `#3C7A3E`, amber (status) `#B8791B`, slate band `#1C2129`.
 
 | Step | Output | Done when |
 |---|---|---|
-| 1 | Next.js app scaffold, tokens, layout, nav, footer | `npm run build` passes |
+| 1 | App scaffold, tokens, layout, nav, footer | `npm run build` passes |
 | 2 | Home, vision, products (overview + 3), pricing, company, security | pages render with real content |
 | 3 | Docs engine + content for each product (9 pages each) + suite docs | `/docs/**` renders, sidebar, prev/next |
 | 4 | Demo launcher: launch pages, start/verify/status routes, ended page | `curl` tests of the verify route |

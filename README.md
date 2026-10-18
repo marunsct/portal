@@ -12,14 +12,16 @@ plane). Everything runs in Docker on hardware you own.
 ## What is in here
 
 ```
-app/                Next.js 15 app router: pages, API routes (demo sessions, support)
-components/         Nav, footer, the rack hero, docs shell, forms
+src/pages/          one module per page (server-rendered React)
+src/ui/             nav, footer, the rack hero, docs shell, forms; islands hydrate in the browser
+src/api/            demo sessions, support tickets, sitemap and robots
+src/lib/            products catalogue, markdown loader, demo-session signing, JSONL store
+src/server/         router, document shell, node:http server, client entry
 content/            Markdown: docs/<product>/*.md, help/*.md, legal/*.md, changelog/*.md
-lib/                products catalogue, markdown loader, demo-session signing, JSONL store
 gateway/Caddyfile   hostname routing + demo gate (forward_auth) + TLS
-scripts/            products.sh (run the three products with demo settings), nightly reset
+scripts/            build.mjs (esbuild), products.sh (run the three products), nightly reset
 site.config.ts      company name, domains, emails, plans, demo limits (edit this first)
-Dockerfile          multi-stage standalone build, non-root
+Dockerfile          two-stage build, four runtime dependencies, non-root
 docker-compose.yml  portal + gateway
 ```
 
@@ -41,7 +43,10 @@ scripts/products.sh up           # clones the three repos and runs their compose
 scripts/products.sh status
 ```
 
-To develop the portal itself without Docker: `npm install && scripts/dev.sh` (Node 22).
+To develop the portal itself without Docker: `npm install`, then `npm run build && npm start`
+(Node 22; `npm run dev` rebuilds on change). The stack is deliberately small: React rendered
+on the server, a handful of interactive islands bundled by esbuild, and a `node:http` server.
+There is no web framework to upgrade.
 
 ## Deploy it
 
@@ -60,12 +65,12 @@ backing up leads and tickets, and self-hosting the fonts, are in `docs/OPERATION
 ## Editing content
 
 - **Company facts, domains, emails, prices, demo limits:** `site.config.ts`.
-- **Product copy** (taglines, features, FAQ, demo rules): `lib/products.ts`.
+- **Product copy** (taglines, features, FAQ, demo rules): `src/lib/products.ts`.
 - **Documentation:** Markdown under `content/docs/<product>/`. Front matter `title`,
   `description`, `section`, `order`. New files appear in the sidebar automatically.
 - **Help centre / legal / changelog:** Markdown under the matching `content/` folder.
 - **Screenshots:** drop `public/screens/<product>.png` and swap the `ProductSketch` for an
-  image on the product page when you have real captures.
+  image in `src/pages/product.tsx` when you have real captures.
 
 ## How the demo gate works
 
