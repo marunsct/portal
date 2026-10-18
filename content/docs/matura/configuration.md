@@ -52,7 +52,7 @@ Keycloak container variables set by the bundle:
 
 | Variable | Default | Meaning |
 |---|---|---|
-| `MATURA_KEK` | required outside development | 32 random bytes, base64. Key-encryption key for envelope encryption (AES-256-GCM) of app secrets, webhook signing keys, database-server passwords, SSO client secrets and audit-sink secrets. In development a random key is used per run and stored secrets stop opening after a restart. |
+| `MATURA_KEK` | required outside development | 32 random bytes, base64. Key-encryption key for envelope encryption (AES-256-GCM) of webhook signing keys, database-server passwords, SSO client secrets and audit-sink secrets; app secrets, invitation and SCIM tokens are stored hashed instead. In development a random key is used per run and stored secrets stop opening after a restart. |
 
 ## Email
 

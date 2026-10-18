@@ -62,7 +62,7 @@ Every value below must be changed from the evaluation defaults. Generate them on
 | Secret | Where | Generate |
 |---|---|---|
 | Postgres passwords for `matura_owner`, `matura_app`, `keycloak`, `openfga` | `init-db.sql` and the `*_DATABASE_URL`, `KC_DB_PASSWORD`, `OPENFGA_DATASTORE_URI` values | `openssl rand -hex 24` each |
-| `MATURA_KEK` | `maturad` | `openssl rand -base64 32`. Required outside development. Encrypts app secrets, webhook signing keys, database-server passwords and SSO client secrets. Losing it makes those unreadable. |
+| `MATURA_KEK` | `maturad` | `openssl rand -base64 32`. Required outside development. Encrypts webhook signing keys, audit-sink secrets, database-server passwords and SSO client secrets (app secrets and tokens are stored hashed). Losing it makes those unreadable. |
 | `MATURA_INTERNAL_TOKEN` | `maturad` and `keycloak` (same value) | `openssl rand -hex 32`. At least 32 characters; Keycloak's extension presents it on `/internal/v1/*`. |
 | `MATURA_KEYCLOAK_CLIENT_SECRET` | `maturad` and `keycloak` (same value) | `openssl rand -hex 32`. The secret of the confidential client `matura-admin`, which `maturad` uses for sessions, MFA, SSO and SCIM provisioning. The realm import reads it from the environment. |
 | `OPENFGA_AUTHN_PRESHARED_KEYS` / `MATURA_OPENFGA_TOKEN` | `openfga` and `maturad` (same value) | `openssl rand -hex 32` |

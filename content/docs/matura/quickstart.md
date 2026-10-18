@@ -73,30 +73,31 @@ Browse to `http://localhost:8080/portal/`. In development mode the portal shows 
 
 ## 6. Register an app as an operator
 
-Apps are registered by operators with a manifest. Send the operator header this time. The manifest below declares a permission catalogue and two roles; `tenancy` says the app keeps tenant data in one shared database with row-level security.
+Apps are registered by operators with a manifest. Send the operator header this time. The realm already contains a Keycloak client named `agentcanvas` that carries Matura's token mapper, so register an app with that slug and you can mint real app tokens in step 12 without touching Keycloak. The manifest declares a permission catalogue and roles; `tenancy` says the app keeps tenant data in one shared database with row-level security.
 
 ```bash
-curl -s -X PUT localhost:8080/admin/v1/apps/notes \
+curl -s -X PUT localhost:8080/admin/v1/apps/agentcanvas \
   -H "X-Matura-Dev-User: $ME" -H 'X-Matura-Dev-Operator: true' \
   -H 'Content-Type: application/json' -d '{
-    "slug": "notes", "name": "Notes",
-    "auth": {"redirect_uris": ["http://localhost:8000/*"], "public_client": true},
-    "permissions": [{"name":"note.read"},{"name":"note.write"}],
-    "roles": [{"name":"viewer","permissions":["note.read"]},
-              {"name":"editor","permissions":["note.read","note.write"]}],
-    "default_role": "viewer",
+    "slug": "agentcanvas", "name": "AgentCanvas",
+    "auth": {"redirect_uris": ["http://localhost:7777/*"], "public_client": true},
+    "permissions": [{"name":"canvas.read"},{"name":"workflow.build"},{"name":"inbox.review"},{"name":"org.admin"}],
+    "roles": [{"name":"viewer","permissions":["canvas.read"]},
+              {"name":"builder","permissions":["canvas.read","workflow.build"]},
+              {"name":"admin","permissions":["*"]}],
+    "default_role": "viewer", "owner_role": "admin",
     "tenancy": {"modes":["shared"], "managers":["app"], "default":{"mode":"shared","manager":"app"}}
   }' | jq '.app.slug, .changed'
 ```
 
-Expected: `"notes"` and `true`. Re-applying the same manifest answers `"changed": false`; roles you later edit in Matura are never overwritten by a manifest.
+Expected: `"agentcanvas"` and `true`. Re-applying the same manifest answers `"changed": false`; roles you later edit in Matura are never overwritten by a manifest. For your own app you would pick your own slug and create a matching client in Keycloak with the `matura-token-mapper` attached.
 
 ## 7. Enable the app for the tenant
 
-In the portal, open **Apps** and enable *Notes*, or:
+In the portal, open **Apps** and enable *AgentCanvas*, or:
 
 ```bash
-curl -s -X PUT localhost:8080/v1/tenants/$TID/apps/notes -H "X-Matura-Dev-User: $ME" | jq .status
+curl -s -X PUT localhost:8080/v1/tenants/$TID/apps/agentcanvas -H "X-Matura-Dev-User: $ME" | jq .status
 ```
 
 ## 8. Invite a colleague
@@ -104,7 +105,7 @@ curl -s -X PUT localhost:8080/v1/tenants/$TID/apps/notes -H "X-Matura-Dev-User: 
 ```bash
 curl -s -X POST localhost:8080/v1/tenants/$TID/invitations \
   -H "X-Matura-Dev-User: $ME" -H 'Content-Type: application/json' \
-  -d '{"email":"ben@acme.test","tenant_role":"member","app_roles":[{"app":"notes","role":"editor"}]}' | jq .
+  -d '{"email":"ben@acme.test","tenant_role":"member","app_roles":[{"app":"agentcanvas","role":"builder"}]}' | jq .
 ```
 
 The response includes `accept_url` once. The email also arrives in Mailpit at `http://localhost:8025`. Invitations expire after 7 days and can be resent or revoked from the portal's **Invitations** page.
@@ -136,11 +137,11 @@ Now every `/v1` call needs `Authorization: Bearer <token>` with `aud: matura-api
 
 ## 11. Sign in to the portal through Keycloak
 
-Reload `http://localhost:8080/portal/`. You are sent to Keycloak, sign in as Ana, and come back signed in with PKCE. Create an organisation from the portal (or `POST /v1/tenants` with the bearer token), enable Notes, and look at **My account** to see your profile as Matura knows it.
+Reload `http://localhost:8080/portal/`. You are sent to Keycloak, sign in as Ana, and come back signed in with PKCE. Create an organisation from the portal (or `POST /v1/tenants` with the bearer token), enable AgentCanvas on the Apps page, and look at **My account** to see your profile as Matura knows it.
 
 ## 12. Look at an app token
 
-Get a token for the app client and read its claims. The realm ships a public client `agentcanvas` that carries the token mapper; for your own app the manifest in step 6 created a client `notes`.
+Get a token for the `agentcanvas` client and read its claims. Because the client carries the Matura token mapper and Ana's organisation has the app enabled, the token names her tenant and permissions. The client only allows the browser (authorization code) flow, so for this one evaluation step turn on **Direct access grants** on the `agentcanvas` client in the Keycloak admin console (Clients → agentcanvas → Capability config), and turn it off again afterwards.
 
 ```bash
 curl -s localhost:8180/realms/matura/protocol/openid-connect/token \
