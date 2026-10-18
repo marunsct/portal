@@ -1,0 +1,111 @@
+# Ownstack gateway.
+#
+# Routes by hostname:
+#   www.<domain>              -> portal
+#   <domain>                  -> redirect to www
+#   devflow.<demo zone>       -> DevFlow     (demo session required)
+#   canvas.<demo zone>        -> AgentCanvas (demo session required)
+#   matura.<demo zone>        -> Matura      (demo session required)
+#   id.<demo zone>            -> Keycloak    (demo session required; same product as Matura)
+#
+# Environment variables are substituted when Caddy loads this file:
+#   PUBLIC_DOMAIN           e.g. ownstack.example      (local: localhost)
+#   DEMO_ZONE               e.g. demo.ownstack.example (local: demo.localhost)
+#   SITE_ADDRESS_PREFIX     "" for automatic HTTPS, "http://" for plain HTTP locally
+#   ACME_EMAIL              for Let's Encrypt notices
+#   *_UPSTREAM              where each product listens
+#
+# Automatic HTTPS: Caddy obtains a certificate per hostname from Let's Encrypt when the
+# domain resolves to this host and ports 80/443 are reachable. For a wildcard certificate
+# use the DNS challenge (see docs/OPERATIONS.md).
+
+{
+	email {$ACME_EMAIL}
+	servers {
+		trusted_proxies static private_ranges
+	}
+}
+
+(security_headers) {
+	header {
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+		-Server
+	}
+}
+
+# A demo host: ask the portal whether this browser holds a session, then proxy.
+# Caddy forwards the original Host as X-Forwarded-Host and the path as X-Forwarded-Uri;
+# a non-2xx answer (the portal's 302 to the launch page) is returned to the browser as-is.
+(demo_gate) {
+	forward_auth portal:3000 {
+		uri /api/demo/verify
+		copy_headers X-Demo-Session X-Demo-Expires
+	}
+}
+
+(stream_friendly) {
+	# WebSockets (DevFlow) and server-sent events (AgentCanvas) must not be buffered.
+	flush_interval -1
+	transport http {
+		read_timeout 1h
+		write_timeout 1h
+		dial_timeout 10s
+	}
+	header_up X-Forwarded-Proto {scheme}
+	header_up X-Real-IP {remote_host}
+}
+
+# ---- portal ---------------------------------------------------------------
+
+{$SITE_ADDRESS_PREFIX}www.{$PUBLIC_DOMAIN} {
+	import security_headers
+	encode zstd gzip
+	reverse_proxy portal:3000 {
+		header_up X-Forwarded-Proto {scheme}
+	}
+}
+
+{$SITE_ADDRESS_PREFIX}{$PUBLIC_DOMAIN} {
+	redir {$SITE_ADDRESS_PREFIX}www.{$PUBLIC_DOMAIN}{uri} permanent
+}
+
+# ---- demos ----------------------------------------------------------------
+
+{$SITE_ADDRESS_PREFIX}devflow.{$DEMO_ZONE} {
+	import security_headers
+	import demo_gate
+	request_body {
+		max_size 64MB
+	}
+	reverse_proxy {$DEVFLOW_UPSTREAM} {
+		import stream_friendly
+	}
+}
+
+{$SITE_ADDRESS_PREFIX}canvas.{$DEMO_ZONE} {
+	import security_headers
+	import demo_gate
+	request_body {
+		max_size 32MB
+	}
+	reverse_proxy {$AGENTCANVAS_UPSTREAM} {
+		import stream_friendly
+	}
+}
+
+{$SITE_ADDRESS_PREFIX}matura.{$DEMO_ZONE} {
+	import security_headers
+	import demo_gate
+	reverse_proxy {$MATURA_UPSTREAM} {
+		import stream_friendly
+	}
+}
+
+{$SITE_ADDRESS_PREFIX}id.{$DEMO_ZONE} {
+	import security_headers
+	import demo_gate
+	reverse_proxy {$KEYCLOAK_UPSTREAM} {
+		import stream_friendly
+	}
+}

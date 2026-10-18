@@ -1,0 +1,81 @@
+# Ownstack portal: the website plus the gateway that routes to the product demos.
+#
+#   cp .env.example .env            # set PUBLIC_DOMAIN, DEMO_SESSION_SECRET, upstreams
+#   docker compose up -d --build
+#
+# The three products are NOT started by this file. Run each with its own compose bundle
+# (scripts/products.sh does it for you) and point the *_UPSTREAM variables at them.
+# By default they are expected on the Docker host: host.docker.internal:8000 (DevFlow),
+# :7777 (AgentCanvas web), :8080 (Matura), :8180 (Keycloak for Matura).
+
+name: ownstack-portal
+
+services:
+  portal:
+    build: .
+    image: ${PORTAL_IMAGE:-ownstack/portal:local}
+    restart: unless-stopped
+    environment:
+      PUBLIC_DOMAIN: ${PUBLIC_DOMAIN:-localhost}
+      DEMO_ZONE: ${DEMO_ZONE:-demo.${PUBLIC_DOMAIN:-localhost}}
+      DEMO_SCHEME: ${DEMO_SCHEME:-https}
+      DEMO_COOKIE_DOMAIN: ${DEMO_COOKIE_DOMAIN:-}
+      DEMO_SESSION_SECRET: ${DEMO_SESSION_SECRET:?set DEMO_SESSION_SECRET in .env (32+ random characters)}
+      DEMO_SESSION_MINUTES: ${DEMO_SESSION_MINUTES:-45}
+      DEMO_MAX_CONCURRENT: ${DEMO_MAX_CONCURRENT:-5}
+      DEMO_REQUIRE_EMAIL: ${DEMO_REQUIRE_EMAIL:-false}
+      DEVFLOW_UPSTREAM: ${DEVFLOW_UPSTREAM:-http://host.docker.internal:8000}
+      AGENTCANVAS_UPSTREAM: ${AGENTCANVAS_UPSTREAM:-http://host.docker.internal:7777}
+      MATURA_UPSTREAM: ${MATURA_UPSTREAM:-http://host.docker.internal:8080}
+      DEVFLOW_DEMO_PASSWORD: ${DEVFLOW_DEMO_PASSWORD:-}
+      SUPPORT_WEBHOOK_URL: ${SUPPORT_WEBHOOK_URL:-}
+    volumes:
+      - portal-data:/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks: [edge]
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:3000/api/demo/status"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+
+  gateway:
+    image: caddy:2.9-alpine
+    restart: unless-stopped
+    depends_on:
+      portal:
+        condition: service_healthy
+    ports:
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
+      - "${HTTPS_PORT:-443}:443/udp"
+    environment:
+      PUBLIC_DOMAIN: ${PUBLIC_DOMAIN:-localhost}
+      DEMO_ZONE: ${DEMO_ZONE:-demo.${PUBLIC_DOMAIN:-localhost}}
+      SITE_ADDRESS_PREFIX: ${SITE_ADDRESS_PREFIX:-}
+      ACME_EMAIL: ${ACME_EMAIL:-}
+      DEVFLOW_UPSTREAM: ${DEVFLOW_UPSTREAM:-http://host.docker.internal:8000}
+      AGENTCANVAS_UPSTREAM: ${AGENTCANVAS_UPSTREAM:-http://host.docker.internal:7777}
+      MATURA_UPSTREAM: ${MATURA_UPSTREAM:-http://host.docker.internal:8080}
+      KEYCLOAK_UPSTREAM: ${KEYCLOAK_UPSTREAM:-http://host.docker.internal:8180}
+    volumes:
+      - ./gateway/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks: [edge]
+
+volumes:
+  portal-data:
+  caddy-data:
+  caddy-config:
+
+networks:
+  edge:

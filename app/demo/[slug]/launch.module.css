@@ -1,0 +1,45 @@
+.sessionPanel {
+  display: grid;
+  gap: 16px;
+  position: sticky;
+  top: 92px;
+}
+.creds {
+  margin: 0;
+  display: grid;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+}
+.creds div {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 10px;
+  font-size: 0.95rem;
+}
+.creds dt {
+  color: var(--graphite);
+}
+.creds dd {
+  margin: 0;
+  word-break: break-all;
+}
+.list {
+  margin: 0;
+  padding-left: 1.2em;
+  display: grid;
+  gap: 8px;
+}
+.listMuted {
+  color: var(--graphite);
+}
+.steps {
+  margin: 12px 0 0;
+  padding-left: 1.3em;
+  display: grid;
+  gap: 10px;
+}
+.steps li::marker {
+  color: var(--cobalt);
+  font-weight: 600;
+}

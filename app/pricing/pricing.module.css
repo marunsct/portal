@@ -1,0 +1,78 @@
+.plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 0;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--paper);
+}
+.plan {
+  padding: 28px 24px 30px;
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  border-right: 1px solid var(--rule);
+}
+.plan:last-child {
+  border-right: 0;
+}
+@media (max-width: 1040px) {
+  .plan {
+    border-right: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .plan:last-child {
+    border-bottom: 0;
+  }
+}
+.featured {
+  background: var(--cobalt-tint);
+}
+.plan h2 {
+  font-size: 1.4rem;
+}
+.price {
+  display: grid;
+  gap: 2px;
+}
+.price > span:first-child {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.period {
+  font-size: 0.88rem;
+  color: var(--graphite);
+}
+.summary {
+  color: var(--ink-soft);
+  font-size: 0.97rem;
+  min-height: 4.5em;
+}
+.includes {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+  font-size: 0.93rem;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+  min-height: 190px;
+}
+.includes li {
+  padding-left: 18px;
+  position: relative;
+}
+.includes li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--cobalt);
+}

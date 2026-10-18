@@ -1,0 +1,63 @@
+.hero {
+  padding-top: clamp(40px, 7vw, 96px);
+}
+.ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.productRow {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  padding: 34px 0;
+}
+.productLink {
+  color: var(--ink);
+}
+.productLink:hover {
+  color: var(--cobalt);
+  text-decoration: none;
+}
+.proof {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+}
+.proof li {
+  font-size: 0.9rem;
+  padding: 5px 10px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  color: var(--ink-soft);
+}
+.rowLinks {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  font-size: 0.97rem;
+}
+.slateTable th,
+.slateTable td {
+  border-color: var(--slate-3);
+  color: var(--slate-text);
+}
+.slateTable thead th {
+  color: #fff;
+  border-bottom-color: var(--slate-muted);
+}
+.slateTable td:first-child {
+  color: #fff;
+  font-weight: 500;
+}
+.steps {
+  margin: 0;
+  padding-left: 1.3em;
+  display: grid;
+  gap: 12px;
+}
+.steps li::marker {
+  color: var(--cobalt);
+  font-weight: 600;
+}
