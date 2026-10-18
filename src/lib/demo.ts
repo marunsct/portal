@@ -84,7 +84,13 @@ export function cookieDomain(): string | undefined {
   if (explicit) return explicit;
   // demo.zone is "demo.<domain>"; the cookie must cover <domain> and *.demo.<domain>.
   const parts = demo.zone.split(".");
-  if (parts[0] === "demo" && parts.length > 1) return "." + parts.slice(1).join(".");
+  if (parts[0] === "demo" && parts.length > 1) {
+    const parent = parts.slice(1).join(".");
+    // Chromium rejects cookies scoped to "localhost"; host-only cookies still let
+    // the launch page work locally (the demo hosts then need DEMO_GATE_DISABLED).
+    if (parent === "localhost") return undefined;
+    return "." + parent;
+  }
   return undefined;
 }
 

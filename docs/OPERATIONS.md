@@ -144,8 +144,9 @@ visitor's IP rather than the gateway's. Keep those ports closed to the internet.
   in a new tab for that reason. Do not try to iframe them.
 - The concurrency counter is per portal process and file-based. Fine for one replica; move
   to a shared store before running several portal replicas.
-- Local testing with `*.localhost`: the demo cookie is set with `Domain=.localhost`. Firefox
-  and Safari accept it; some Chrome versions drop cookies with a `localhost` domain. If the
-  demo hosts keep redirecting you to the launch page in Chrome, add a line such as
+- Local testing with `*.localhost`: Chromium refuses cookies scoped to `localhost`, so on
+  `PUBLIC_DOMAIN=localhost` the demo cookie is host-only and the demo hosts cannot see it.
+  Set `DEMO_GATE_DISABLED=true` in `.env` to let the gateway through while developing, or
+  test the real gate with a hosts-file domain: add a line such as
   `127.0.0.1 www.ownstack.test devflow.demo.ownstack.test canvas.demo.ownstack.test matura.demo.ownstack.test`
   to `/etc/hosts` and set `PUBLIC_DOMAIN=ownstack.test`, `DEMO_ZONE=demo.ownstack.test`.

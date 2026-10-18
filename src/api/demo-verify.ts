@@ -24,6 +24,11 @@ export async function GET(req: Request) {
     return new Response("unknown demo host", { status: 404 });
   }
 
+  // Local development switch: let every request through the gateway.
+  if (process.env.DEMO_GATE_DISABLED === "true") {
+    return new Response(null, { status: 200 });
+  }
+
   const token = readCookie(req.headers.get("cookie"));
   const session = verifyToken(token);
 

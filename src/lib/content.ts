@@ -90,6 +90,13 @@ function extractHeadings(markdown: string) {
   return out;
 }
 
+function formatDate(v: unknown): string | undefined {
+  if (!v) return undefined;
+  const d = v instanceof Date ? v : new Date(String(v));
+  if (Number.isNaN(d.getTime())) return String(v);
+  return d.toISOString().slice(0, 10);
+}
+
 function readMarkdownFile(file: string, slug: string[]): Doc {
   const raw = fs.readFileSync(file, "utf8");
   const { data, content } = matter(raw);
@@ -102,7 +109,7 @@ function readMarkdownFile(file: string, slug: string[]): Doc {
     section: data.section,
     html,
     headings: extractHeadings(content),
-    updated: data.updated ? String(data.updated) : undefined,
+    updated: formatDate(data.updated),
   };
 }
 
