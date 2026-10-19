@@ -48,6 +48,7 @@ export const productPage: Page = {
           <a href="#how">How it works</a>
           <a href="#features">Features</a>
           <a href="#local">Local first</a>
+          <a href="#next">Roadmap</a>
           <a href="#specs">Specifications</a>
           <a href="#compare">Compared</a>
           <a href="#faq">Questions</a>
@@ -113,6 +114,27 @@ export const productPage: Page = {
               <li key={l}>{l}</li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      <section className="section" id="next">
+        <div className="container split">
+          <div>
+            <p className="kicker">What it proves, and what is next</p>
+            <h2>{p.proves}</h2>
+          </div>
+          <div>
+            <h3 style={{ fontSize: "1.15rem", marginBottom: 12 }}>On the roadmap</h3>
+            <ul style={{ paddingLeft: "1.2em", margin: 0, display: "grid", gap: 10 }}>
+              {p.next.map((n) => (
+                <li key={n}>{n}</li>
+              ))}
+            </ul>
+            <p className="small muted" style={{ marginTop: 16 }}>
+              Intentions, not commitments. See the <Link href="/vision">vision</Link> for timing and the{" "}
+              <Link href="/changelog">changelog</Link> for what shipped.
+            </p>
+          </div>
         </div>
       </section>
 

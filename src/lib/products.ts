@@ -10,6 +10,8 @@ export interface Product {
   id: ProductId;
   name: string;
   layer: string; // the role it plays in the stack
+  proves: string; // what evidence it produces
+  next: string[]; // roadmap ideas backed by the research
   tagline: string;
   oneLiner: string;
   description: string[];
@@ -39,14 +41,23 @@ export const products: Product[] = [
   {
     id: "devflow",
     name: "DevFlow",
-    layer: "Build",
-    tagline: "A software company that runs on your GPU.",
+    layer: "Software factory",
+    proves: "That the code meets an acceptance suite written and locked before it existed, with every decision and model call on record.",
+    next: [
+      "Published scorecards on Vibe Code Bench and ViBench with locally hosted models",
+      "Per-run compliance evidence pack: acceptance results, decisions, model and version, SBOM",
+      "An acceptance-lock gate that wraps any coding agent, not only DevFlow's own",
+      "Policy-based hybrid routing: local models for bulk work, a frontier model only where data class allows",
+      "Domestic model backends and Japanese-language briefs",
+      "Brownfield modernisation that pins current behaviour before migrating",
+    ],
+    tagline: "The verification-first software factory for models you host.",
     oneLiner:
-      "Upload a product brief. A team of AI agents turns it into a tested, documented repository, sprint by sprint, on your own model server.",
+      "A brief becomes a tested repository with an audit record. QA locks the acceptance suite before any code exists, so the agents cannot grade their own work.",
     description: [
       "DevFlow is a complete software-delivery organisation in a container. A product manager reads your brief, a stack selector and architect design the system, QA writes an acceptance suite before a line of product code exists, a scrum master plans sprints, specialist developers work through work orders in parallel, and code, security and milestone reviewers gate every step.",
       "The output is not a chat transcript. It is a git repository with unit tests, a locked acceptance suite, design documents, a decision log, sprint records, a CI workflow and container files, handed over as a zip or left in place for you to keep building on.",
-      "It was built around the constraints of self-hosted models: small context windows, slow single-request servers, and no assumption that a frontier API is one key away. An optional second 'judgement' model can be used for the stages that need it, or switched off so a run is 100% local.",
+      "It was built around the constraints of self-hosted models: small context windows, slow single-request servers, and no assumption that a frontier API is one key away. Practitioners running local models report the same fixes DevFlow is made of: plan first, work in small pieces, test and analyse every step. An optional second 'judgement' model can review the stages that need it where your data policy allows, or be switched off so a run is entirely local.",
     ],
     audience:
       "Technical founders and product owners who want a verified codebase from a specification, and platform teams that cannot send code to a hosted coding agent.",
@@ -115,7 +126,8 @@ export const products: Product[] = [
     compare: [
       { against: "Hosted coding agents (Devin, Copilot Workspace)", difference: "DevFlow never sends your brief or code to a vendor. The model is yours; the output is a plain repository." },
       { against: "IDE agents (Cursor, Windsurf)", difference: "DevFlow runs a whole delivery process unattended with recorded decisions, not an editor you drive line by line." },
-      { against: "OpenHands, GPT-Engineer", difference: "An independently written, locked acceptance suite and hidden-benchmark scoring define 'done'. The agent's own tests passing is not enough." },
+      { against: "OpenHands, GPT-Engineer, MetaGPT", difference: "An independently written, locked acceptance suite and hidden-benchmark scoring define 'done'. The agent's own tests passing is not enough." },
+      { against: "Air-gapped agents (Factory, Tabnine)", difference: "They bring agents inside the perimeter. DevFlow brings a verification process: locked acceptance, revert-on-regression, decision records and run budgets." },
     ],
     faq: [
       { q: "Which models work?", a: "Any OpenAI-compatible chat endpoint. The team runs it on local mixture-of-experts coding models in the 30B class with a 32k or larger context window; smaller models work for small briefs. The run time scales with the model's speed." },
@@ -151,14 +163,22 @@ export const products: Product[] = [
   {
     id: "agentcanvas",
     name: "AgentCanvas",
-    layer: "Create",
-    tagline: "Draw the agent. Own the code. Run it on any model.",
+    layer: "Agent workbench",
+    proves: "That an agent still behaves as intended after every change, with evaluations gating each release and code you can take anywhere.",
+    next: [
+      "Rescue importers for OpenAI Agent Builder exports, Flowise and Langflow, each generating a regression eval set",
+      "Agent register: an owner, a cost cap and usage telemetry for every agent",
+      "Governed private MCP and A2A registry with default-deny tool policy",
+      "Canvas-to-code round trip so edits from coding agents flow back to the canvas",
+      "Air-gapped agent packs and Japanese workflow templates (稟議 approval, invoice audit)",
+    ],
+    tagline: "Own the agent code. Gate every release.",
     oneLiner:
-      "A visual builder for AI agents and workflows that compiles to real, readable code in ten frameworks, then runs, debugs, evaluates and publishes it.",
+      "A canvas that compiles agents to idiomatic framework code your coding agents can also edit, with self-hosted evaluations that gate every release.",
     description: [
       "AgentCanvas is a canvas where blocks are agents, model calls, routers, tools, MCP servers, approvals, memory and safety guards. Wire them together and the backend compiles the picture into an idiomatic project for the framework you chose: LangGraph by default, or the OpenAI Agents SDK, CrewAI, Google ADK, Pydantic AI, Agno, Microsoft Agent Framework, Strands, LlamaIndex or Mastra.",
       "There is no hidden runtime. What you export is what runs. The same canvas gives you durable runs with time travel and forking, an evaluation studio with release gates, semantic versions with drawn diffs, and one-click publishing as an API, an MCP server, an A2A agent, a share page or an embeddable widget.",
-      "It imports Langflow, Flowise and n8n files, ships with 27 templates and a copilot that proposes changes you accept, and it treats local models as first-class citizens rather than a footnote.",
+      "It imports Langflow, Flowise and n8n files, ships with 27 templates and a copilot that proposes changes you accept, and it treats local models as first-class citizens rather than a footnote. In 2026 three hosted builders shut down and their users had no code to take with them; AgentCanvas exists so that never happens to yours.",
     ],
     audience:
       "Builders and small teams who want to design agents visually but refuse to be locked into a proprietary engine, and teams that need evaluation and governance before an agent reaches production.",
@@ -240,10 +260,18 @@ export const products: Product[] = [
   {
     id: "matura",
     name: "Matura",
-    layer: "Sell",
-    tagline: "From prototype to procurement-ready.",
+    layer: "Control plane",
+    proves: "Tenant isolation and agent accountability, from the running system: who acted, for whom, in which tenant, on whose authority.",
+    next: [
+      "Free conformance CLI that tests any app, on any identity provider, for tenant leaks and audit integrity",
+      "Shared enterprise tier for DevFlow and AgentCanvas: one installer, one security review",
+      "Japan control packs (ISMS, ISMAP, 3省2, FISC, DS-920) and tested HENNGE One and Entra guides",
+      "Enterprise-managed authorization (ID-JAG) for MCP servers with tenant-scoped agent revocation",
+      "Evidence connectors to Vanta and Drata",
+    ],
+    tagline: "Prove isolation and agent accountability from the running system.",
     oneLiner:
-      "A self-hosted control plane that gives any application the single sign-on, tenancy, audit, privacy and compliance evidence enterprise buyers require.",
+      "The control plane under the suite and under your own apps: tenants isolated in your Postgres, people and agents as revocable identities, and a hash-chained audit trail that produces evidence on demand.",
     description: [
       "Building a product is now easy. Selling it to a business is not. The first enterprise customer asks for SSO, data separation, an audit trail, deletion on request, backups and a SOC 2 story, and every answer is weeks of work unrelated to what your product does.",
       "Matura answers those questions once, for every app you build. Add one SDK and a set of services you run yourself, and your application gets tenants and workspaces with database-level isolation, Keycloak-backed sign-in with per-tenant enterprise SSO and SCIM, fine-grained permissions, a tenant admin portal, a tamper-evident audit log, data export and erasure, entitlements, and a readiness score with exportable evidence.",
@@ -294,7 +322,8 @@ export const products: Product[] = [
       { label: "Resources", value: "maturad 128 MB; Keycloak 1–2 GB" },
     ],
     compare: [
-      { against: "WorkOS, Frontegg, Clerk", difference: "Hosted and priced per connection or per user. Matura runs on your servers and the licence does not meter your customers." },
+      { against: "WorkOS, Frontegg, Clerk", difference: "Hosted SSO is cheap and good. Matura is not competing on SSO: it adds database-level isolation, agent accountability and evidence, on your servers." },
+      { against: "Entra Agent ID, Okta for AI agents", difference: "Those govern your workforce's agents. Matura governs the agents inside your product, per customer tenant, with each action on a tamper-evident record." },
       { against: "Keycloak, Zitadel, Authentik alone", difference: "Identity providers stop at sign-in. Matura adds tenancy, isolation, audit, data rights, entitlements and readiness on top of an unforked Keycloak." },
       { against: "Vanta, Drata", difference: "Compliance platforms check that controls exist. Matura adds the controls to your app and produces the evidence." },
     ],

@@ -3,8 +3,26 @@ import Link from "@/src/ui/Link";
 import { Rack } from "@/src/ui/Rack";
 import { Island } from "@/src/ui/Island";
 import { products } from "@/src/lib/products";
-import { company } from "@/site.config";
 import styles from "./home.module.css";
+
+const pillars = [
+  {
+    title: "Proven, not vibed",
+    body: "An acceptance suite written by a separate QA role and locked before any code exists, a CI gate that reverts regressions, and decision records for every design choice. Each run ends with evidence, not a claim.",
+  },
+  {
+    title: "Sovereign by design, hybrid by policy",
+    body: "Local and domestic models are first-class. Frontier models are allowed per data class when your policy says so, and every call records which model and version handled what.",
+  },
+  {
+    title: "Own the output",
+    body: "Plain git repositories, idiomatic framework code, exportable data and offline licences. If you stop paying us, your software and your agents keep running.",
+  },
+  {
+    title: "One control plane",
+    body: "Identity, tenancy, audit and evidence come from one layer shared by every product, so a security review happens once.",
+  },
+];
 
 export const homePage: Page = {
   render: (ctx: PageContext) => {
@@ -23,12 +41,11 @@ export const homePage: Page = {
       <section className={`section ${styles.hero}`}>
         <div className="container split" style={{ alignItems: "center" }}>
           <div className="stack" style={{ ["--stack-gap" as string]: "1.4rem" }}>
-            <h1 className="rise">
-              Build, run and sell AI software on hardware you own.
-            </h1>
+            <h1 className="rise">Ship AI-built software you can prove.</h1>
             <p className="lede rise rise--2">
-              Three self-hosted products that take a team from a written brief to a product
-              enterprises can buy. Every model call stays on machines you control.
+              Ownstack builds, tests and governs AI-written code and agents inside your perimeter: on local
+              and domestic models where your data requires them, on any model where your policy allows.
+              Every run leaves evidence an auditor can read.
             </p>
             <div className={`${styles.ctas} rise rise--3`}>
               <Link href="/demo" className="btn btn--primary btn--lg">
@@ -39,7 +56,7 @@ export const homePage: Page = {
               </Link>
             </div>
             <p className={`small muted rise rise--3`}>
-              Runs against LM Studio, Ollama, vLLM or llama.cpp. No vendor API required.
+              Self-hosted. Offline licence. Runs on LM Studio, Ollama, vLLM, llama.cpp and Japan&apos;s domestic models.
             </p>
           </div>
           <Island name="Rack" component={Rack} props={{ units }} />
@@ -50,20 +67,28 @@ export const homePage: Page = {
         <div className="container split">
           <div>
             <p className="kicker">Why this exists</p>
-            <h2>Hosted AI tooling has a price that is not on the invoice.</h2>
+            <h2>Writing code got cheap. Trusting it did not.</h2>
           </div>
           <div className="stack" style={{ ["--stack-gap" as string]: "1.1rem" }}>
             <p className="lede">
-              Coding agents want your repository. Agent builders want your prompts and your
-              customers&apos; conversations. Identity vendors want to sit between you and every
-              login. For a growing number of teams, in regulated industries, in public sector
-              work, in companies whose code <em>is</em> the company, that is not a trade they can make.
+              Coding agents that can see the tests learn to pass the tests. In one 2026 study they hard-coded
+              answers on up to 44% of ambiguous problems. Whole-app benchmarks name the same failure: agents
+              submit without testing and drift from the spec.
             </p>
             <p>
-              Local models closed most of the capability gap. What has been missing is the
-              software around them: something that turns a local model into a delivery process
-              you can trust, agents you can ship, and a product a procurement team will sign off.
-              {" "}{company.name} builds exactly that, and nothing that needs to phone home.
+              Meanwhile the data question has not gone away. Information leakage is the top generative-AI concern
+              of Japanese companies, and the Digital Agency&apos;s procurement guideline now asks vendors for
+              logs, model and version disclosure and a migration path. Teams need AI-built software that is
+              correct, attributable and governed, and they need it where their data lives.
+            </p>
+            <p className="small muted">
+              Sources:{" "}
+              <a href="https://arxiv.org/abs/2511.21654" rel="noopener">EvilGenie (arXiv 2511.21654)</a>,{" "}
+              <a href="https://vals.ai/benchmarks/vibe-code" rel="noopener">Vals Vibe Code Bench</a>,{" "}
+              <a href="https://www.soumu.go.jp/johotsusintokei/whitepaper/ja/r08/pdf/n1210000.pdf" rel="noopener">
+                MIC ICT White Paper 2026
+              </a>
+              .
             </p>
           </div>
         </div>
@@ -71,8 +96,23 @@ export const homePage: Page = {
 
       <section className="section section--paper">
         <div className="container">
-          <p className="kicker">One stack, three doors</p>
-          <h2 style={{ maxWidth: "22ch" }}>Start with the product you need. Grow into the others.</h2>
+          <p className="kicker">What we stand on</p>
+          <h2 style={{ maxWidth: "22ch" }}>Four commitments, each one checkable.</h2>
+          <div className="rows" style={{ marginTop: 32 }}>
+            {pillars.map((p) => (
+              <div key={p.title} className="row">
+                <h3 style={{ fontSize: "1.25rem" }}>{p.title}</h3>
+                <p>{p.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <p className="kicker">The products</p>
+          <h2 style={{ maxWidth: "24ch" }}>A software factory, an agent workbench, and the control plane under both.</h2>
           <div className="rows" style={{ marginTop: 40 }}>
             {products.map((p) => (
               <article key={p.id} className={`row ${styles.productRow}`}>
@@ -113,9 +153,9 @@ export const homePage: Page = {
           <div className="split">
             <div>
               <p className="kicker">What leaves your network</p>
-              <h2>Nothing, by design.</h2>
+              <h2>Only what your policy allows, and it is logged.</h2>
               <p className="lede" style={{ marginTop: 16 }}>
-                This is not a privacy setting. It is how the products are built.
+                Local by default for the data that needs it. Hybrid by policy for the rest. Never silently.
               </p>
             </div>
             <div className="table-scroll">
@@ -131,22 +171,22 @@ export const homePage: Page = {
                   <tr>
                     <td>Your brief and your code</td>
                     <td>Your DevFlow workspace</td>
-                    <td>Model calls go to the endpoint you configure, local by default. The output is a git repository on your volume.</td>
+                    <td>A git repository on your volume. Model calls go to the endpoint each data class allows.</td>
                   </tr>
                   <tr>
                     <td>Prompts, tools and conversations</td>
                     <td>Your AgentCanvas database</td>
-                    <td>Five local backends in the catalogue, a copilot mode restricted to local models, an offline embedder, no telemetry.</td>
+                    <td>Local and domestic backends first-class, a copilot mode restricted to local models, no telemetry.</td>
                   </tr>
                   <tr>
-                    <td>Your customers&apos; identities and audit trail</td>
+                    <td>Identities, tenants and the audit trail</td>
                     <td>Your Postgres and your Keycloak</td>
-                    <td>Matura is a single binary beside your app. Row-level security that fails closed; evidence exported to your own tooling.</td>
+                    <td>Row-level isolation that fails closed; a hash-chained log covering people and agents.</td>
                   </tr>
                   <tr>
                     <td>The model</td>
-                    <td>Your GPU</td>
-                    <td>None of the products bundle a model or a vendor key. They reach the server you already run.</td>
+                    <td>Your GPU, unless policy says otherwise</td>
+                    <td>A hosted model is used only for data classes you permit, and every such call is recorded with model and version.</td>
                   </tr>
                 </tbody>
               </table>
@@ -158,29 +198,40 @@ export const homePage: Page = {
       <section className="section">
         <div className="container split">
           <div>
+            <p className="kicker">Proof, in public</p>
+            <h2>We publish our numbers before we quote them.</h2>
+          </div>
+          <div className="stack" style={{ ["--stack-gap" as string]: "1.1rem" }}>
+            <p className="lede">
+              Models you can host on one server trail the frontier. Our claim is that a disciplined harness narrows
+              that gap. We are testing it the way anyone can check.
+            </p>
+            <ul className={styles.steps}>
+              <li>
+                DevFlow on Vibe Code Bench and ViBench with locally hosted models, against the same models in an
+                open-source agent, so the harness effect is measured separately from the model.
+              </li>
+              <li>Cost, wall-clock time and a failure taxonomy for every run, not just a score.</li>
+              <li>Results, scripts and the exact model versions published on this site.</li>
+            </ul>
+            <p className="small muted">
+              Until the first results are up, this site makes no benchmark claims about DevFlow.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="section section--rule">
+        <div className="container split">
+          <div>
             <p className="kicker">Try before you install</p>
             <h2>Hosted demos, on our hardware, with time limits.</h2>
           </div>
           <div className="stack" style={{ ["--stack-gap" as string]: "1.2rem" }}>
             <p className="lede">
-              Each product runs in Docker on a box in our office, behind a gateway that hands out
-              short sessions. Start one, follow the first steps on the launch page, and see the
-              real interface rather than a video of it.
+              Each product runs in Docker on a local model in our office, behind a gateway that hands out short
+              sessions. Then install the free Community edition on your own machine.
             </p>
-            <ol className={styles.steps}>
-              <li>
-                <strong>Pick a product.</strong> The launch page tells you what the demo can and
-                cannot do, and how long you have.
-              </li>
-              <li>
-                <strong>Start the session.</strong> You are redirected to the product on its own
-                demo address. Credentials, where needed, are on the launch page.
-              </li>
-              <li>
-                <strong>Install it yourself.</strong> When you are ready, the quick start takes you
-                from clone to running in under an hour on your own machine.
-              </li>
-            </ol>
             <p>
               <Link href="/demo" className="btn btn--primary">
                 Go to the demos
@@ -194,18 +245,16 @@ export const homePage: Page = {
         <div className="container split">
           <div>
             <p className="kicker">How it is sold</p>
-            <h2>Self-hosted, licensed, supported.</h2>
+            <h2>Self-hosted, offline-licensed, supported in Japanese.</h2>
           </div>
           <div className="stack" style={{ ["--stack-gap" as string]: "1.1rem" }}>
             <p className="lede">
-              The products are commercial software you run yourself. You pull images from a
-              private registry with your licence, install them on your servers, and we support
-              the deployment. Larger customers get source access under NDA, air-gapped bundles and
-              escrow.
+              Free Community edition, then annual licences priced per GPU node rather than per token or per seat.
+              Licences are signed files checked offline, so nothing phones home and nothing stops working at expiry.
             </p>
             <p>
-              There is no usage metering of your customers, no per-seat surprise at renewal, and no
-              hosted component you depend on. <Link href="/pricing">See plans and licensing</Link>.
+              Regulated and public-sector customers can buy through a systems integrator, with air-gapped bundles,
+              source review under NDA and escrow. <Link href="/pricing">See plans and licensing</Link>.
             </p>
           </div>
         </div>

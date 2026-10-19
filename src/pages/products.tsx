@@ -14,8 +14,8 @@ export const productsPage: Page = {
     <>
       <PageHeader
         kicker="Products"
-        title="Three products. One rule: it runs on your hardware."
-        lede="Each product stands alone. Together they take a team from a written brief to a product an enterprise can buy."
+        title="A software factory, an agent workbench, and the control plane under both."
+        lede="Each one produces evidence, not just output, and each one runs inside your perimeter on the models your data allows. Matura is the shared control plane for the other two and for your own applications."
       />
 
       <section className="section">

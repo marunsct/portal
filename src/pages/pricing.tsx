@@ -27,6 +27,14 @@ const delivery = [
     body: "Enterprise customers receive an offline bundle: images, charts, documentation and checksums, installable on a network with no internet access.",
   },
   {
+    title: "A continuity guarantee",
+    body: "Every paid licence is covered by source-code escrow, and production never stops at licence expiry. Your ability to run what you built does not depend on our company surviving.",
+  },
+  {
+    title: "Buy direct or through your integrator",
+    body: "Regulated and public-sector customers usually buy through a systems integrator. Our partner programme packages the suite with hardware sizing, model setup and Japanese-language support.",
+  },
+  {
     title: "Your customers are never metered",
     body: "Licences count your named users, not your tenants, your end users or your model calls. Matura in particular is priced so that growing your customer base costs you nothing extra.",
   },
@@ -43,7 +51,7 @@ export const pricingPage: Page = {
       <PageHeader
         kicker="Pricing and licensing"
         title="Commercial software you run yourself."
-        lede="No hosted tier, no per-call metering, no telemetry. You licence the software, install it on your servers, and we support it. Prices shown are starting points; final quotes depend on seats and support level."
+        lede="Start free with the Community edition. Pay per GPU node, not per token or per seat, so wider use of agents never raises your bill. Licences are signed files checked offline. Prices are starting points; final quotes depend on nodes and support level."
       />
 
       <section className="section">

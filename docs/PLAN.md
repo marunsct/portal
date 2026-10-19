@@ -9,6 +9,49 @@ depends on a proposal (names, prices, domains, emails) lives in one file,
 
 ---
 
+> **Revised 2026-10-19 after market research.** The vision and positioning in §0 below
+> supersede §1–§3 where they differ. The evidence is in
+> [`research/2026-10-vision-research.md`](research/2026-10-vision-research.md).
+
+## 0. Revised vision (October 2026)
+
+**Vision:** Ship AI-built software and agents you can prove: built, tested and governed
+inside your perimeter, on the models your data allows. (境界の内側で、証明できるAIソフトウェアを。)
+
+**Positioning:** Ownstack is the verification and governance layer for AI-built software,
+self-hosted and offline-licensed, for teams whose code and data cannot leave the building.
+
+**Pillars** (replacing "local by default", "one stack, three doors"):
+1. Proven, not vibed: locked acceptance suites, revert-on-regression, decision records, model provenance.
+2. Sovereign by design, hybrid by policy: local and domestic models first-class; frontier models per data class, logged.
+3. Own the output: plain repos, idiomatic code, exportable data, offline licences, escrow.
+4. One control plane: Matura is the shared identity/tenancy/audit/evidence tier for the suite.
+
+**What changed and why:** hostable open models trail the frontier by ~10–23 index points, buyers
+run hybrid estates, and hosted open-weight tokens are cheap, so "local by default" and
+"cheaper than cloud" do not hold. Test-gaming by agents and three hosted-builder shutdowns in
+2026 make verification and ownership the defensible story.
+
+**Product roles:** DevFlow = verification-first software factory (lead product; publish
+local-model results on Vibe Code Bench/ViBench first). AgentCanvas = agent workbench and
+"rescue" wedge for Agent Builder/Flowise/Langflow users (lead with four frameworks).
+Matura = control plane under both and under customers' apps; stop competing on SSO.
+
+**Segments, in order:** Japanese regulated in-house dev teams via SIers; SIers as channel;
+public sector under DS-920/Gennai; stranded builder users (global, time-boxed); ISVs selling
+to Japanese regulated buyers. SMEs and generic founders deprioritised.
+
+**Commercial:** free hard-limited Community edition; Team from ¥180k per product per node;
+Business suite from ¥900k; Enterprise from ¥2.5M; per-GPU-node pricing; escrow continuity
+guarantee; SIer packaging at ¥5–10M kit level.
+
+**Open owner decisions:** (1) Matura licence: research recommends keeping the Apache-2.0
+core and SDKs and selling the enterprise pack (the site does not yet say this);
+(2) fair source (FCL) vs closed + escrow for DevFlow/AgentCanvas; (3) company name
+trademark check.
+
+---
+
 ## 1. The company
 
 ### 1.1 What the three products have in common
