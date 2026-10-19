@@ -5,9 +5,11 @@ The public website, documentation and hosted-demo gateway for the Ownstack produ
 agent builder that compiles to ten frameworks) and **Matura** (enterprise-readiness control
 plane). Everything runs in Docker on hardware you own.
 
+- **How to run it (laptop, full local stack, production): [`docs/GETTING-STARTED.md`](docs/GETTING-STARTED.md)**
 - Company vision, product positioning and the reasoning behind the architecture:
   [`docs/PLAN.md`](docs/PLAN.md)
 - Hosting runbook (DNS, TLS, demos, backups, nightly reset): [`docs/OPERATIONS.md`](docs/OPERATIONS.md)
+- Market research behind the vision (October 2026): [`docs/research/`](docs/research/)
 
 ## What is in here
 
@@ -83,5 +85,7 @@ request to a demo host; the portal checks the cookie against that host's product
 
 ## Licence
 
-The portal source is proprietary to the company; the products it describes are commercial,
-closed-source software. See `/legal/eula` on the running site.
+The portal source belongs to the company. The products it describes are source-available:
+DevFlow and AgentCanvas under the Fair Core License (FCL-1.0-ALv2), converting to
+Apache-2.0 two years after each release; Matura's core, SDKs and conformance CLI under
+Apache-2.0, with a commercial enterprise pack. See `/legal/eula` on the running site.

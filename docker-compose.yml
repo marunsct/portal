@@ -60,7 +60,7 @@ services:
       PUBLIC_DOMAIN: ${PUBLIC_DOMAIN:-localhost}
       DEMO_ZONE: ${DEMO_ZONE:-demo.${PUBLIC_DOMAIN:-localhost}}
       SITE_ADDRESS_PREFIX: ${SITE_ADDRESS_PREFIX:-}
-      ACME_EMAIL: ${ACME_EMAIL:-}
+      ACME_EMAIL: ${ACME_EMAIL:-webmaster@localhost}
       DEVFLOW_UPSTREAM: ${DEVFLOW_UPSTREAM:-http://host.docker.internal:8000}
       AGENTCANVAS_UPSTREAM: ${AGENTCANVAS_UPSTREAM:-http://host.docker.internal:7777}
       MATURA_UPSTREAM: ${MATURA_UPSTREAM:-http://host.docker.internal:8080}

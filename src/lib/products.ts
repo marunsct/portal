@@ -19,6 +19,7 @@ export interface Product {
   status: "early access" | "beta" | "general availability";
   version: string;
   repo: { url: string; branch: string };
+  licence: string;
   port: number; // user-facing container port
   demoHostKey: "devflow" | "agentcanvas" | "matura";
   color: string; // single accent used only on the rack unit and product mark
@@ -64,6 +65,7 @@ export const products: Product[] = [
     status: "early access",
     version: "harness-hardening-session",
     repo: { url: "https://github.com/marunsct/DevFlow", branch: "harness-hardening-session" },
+    licence: "Fair Core License (FCL-1.0-ALv2); each release becomes Apache-2.0 after two years",
     port: 8000,
     demoHostKey: "devflow",
     color: "#1f3fc4",
@@ -185,6 +187,7 @@ export const products: Product[] = [
     status: "beta",
     version: "0.28.1",
     repo: { url: "https://github.com/marunsct/AgentCanvas", branch: "main" },
+    licence: "Fair Core License (FCL-1.0-ALv2); each release becomes Apache-2.0 after two years",
     port: 7777,
     demoHostKey: "agentcanvas",
     color: "#3c7a3e",
@@ -282,6 +285,7 @@ export const products: Product[] = [
     status: "early access",
     version: "0.1 (M6)",
     repo: { url: "https://github.com/marunsct/Platform", branch: "main" },
+    licence: "Apache-2.0 core, SDKs and conformance CLI; commercial enterprise pack",
     port: 8080,
     demoHostKey: "matura",
     color: "#b8791b",

@@ -19,8 +19,8 @@ const delivery = [
     body: "Releases follow semantic versions with a public changelog. Security advisories go to the contacts on your account. You decide when to upgrade.",
   },
   {
-    title: "Source access for review",
-    body: "Business and Enterprise customers can read the source under NDA to run their own security review. Enterprise adds escrow so the code is available if we are not.",
+    title: "Source you can read",
+    body: "DevFlow and AgentCanvas are source-available under the Fair Core License, and each release becomes Apache-2.0 two years after it ships. Matura's core, SDKs and conformance CLI are Apache-2.0. Your security team can audit everything before you sign; Enterprise adds escrow for unreleased work.",
   },
   {
     title: "Air-gapped installs",
@@ -82,7 +82,7 @@ export const pricingPage: Page = {
 
       <section className="section section--paper">
         <div className="container">
-          <p className="kicker">How a closed-source product is delivered and kept honest</p>
+          <p className="kicker">How self-hosted software is delivered and kept honest</p>
           <h2 style={{ maxWidth: "24ch" }}>What you get besides the software.</h2>
           <div className="rows" style={{ marginTop: 32 }}>
             {delivery.map((d) => (
@@ -133,9 +133,8 @@ export const pricingPage: Page = {
           <div className="prose">
             <h3>Is the source code available?</h3>
             <p>
-              The products are not open source. Business and Enterprise customers can read the source under NDA for
-              security review, and Enterprise agreements include escrow. The Matura integration contract (SDKs, SQL,
-              webhooks, conformance tests) is published so that any application can implement it.
+              The source is public. DevFlow and AgentCanvas use the Fair Core License: free to run for internal use, with a licence key unlocking the enterprise features, and each release converts to Apache-2.0 after two years. Matura's core is Apache-2.0. Enterprise customers can also have unreleased work held in escrow. You can review the code, run it
+              whatever happens to us, and fork any release once it has converted.
             </p>
             <h3>What happens when a licence expires?</h3>
             <p>

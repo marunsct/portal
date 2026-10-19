@@ -20,7 +20,9 @@
 # use the DNS challenge (see docs/OPERATIONS.md).
 
 {
-	email {$ACME_EMAIL}
+	# Caddy rejects an empty "email" directive, so fall back to a placeholder locally.
+	# Set ACME_EMAIL in .env for production so Let's Encrypt can reach you.
+	email {$ACME_EMAIL:webmaster@localhost}
 	servers {
 		trusted_proxies static private_ranges
 	}

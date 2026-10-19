@@ -105,7 +105,7 @@ export const plans = [
     includes: [
       "Unlimited nodes, HA, dev and staging licences",
       "DS-920 and Japan control packs (ISMS, 3省2, FISC)",
-      "Air-gapped bundle, source review under NDA, escrow",
+      "Air-gapped bundle, escrow of unreleased work",
       "Contractual SLA, 24/7 for severity 1; SIer delivery available",
     ],
     cta: { label: "Contact us", href: "/support?topic=sales&plan=enterprise" },

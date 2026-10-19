@@ -45,10 +45,13 @@ to Japanese regulated buyers. SMEs and generic founders deprioritised.
 Business suite from ¥900k; Enterprise from ¥2.5M; per-GPU-node pricing; escrow continuity
 guarantee; SIer packaging at ¥5–10M kit level.
 
-**Open owner decisions:** (1) Matura licence: research recommends keeping the Apache-2.0
-core and SDKs and selling the enterprise pack (the site does not yet say this);
-(2) fair source (FCL) vs closed + escrow for DevFlow/AgentCanvas; (3) company name
-trademark check.
+**Decisions adopted by the owner (2026-10-20):** follow the research recommendations.
+(1) Matura keeps its Apache-2.0 core, SDKs and conformance CLI; the commercial value is the
+enterprise pack and support. (2) DevFlow and AgentCanvas are source-available under the Fair
+Core License (FCL-1.0-ALv2), converting to Apache-2.0 two years after each release; escrow is
+offered for unreleased work at Enterprise. (3) Still open: company-name trademark check.
+The site, docs, help centre and EULA summary were updated to match; LICENSE files in the
+DevFlow and AgentCanvas repositories still need adding (see GETTING-STARTED §7).
 
 ---
 

@@ -10,7 +10,7 @@ updated: 2026-10-19
 
 Matura is a self-hosted control plane for identity, tenancy, access and compliance evidence. You run it next to your own application; your application verifies the tokens it issues, receives its signed events and keeps a few `matura_*` tables in sync. In return your application gets the things business buyers ask for before they sign: single sign-on, multi-tenancy with database-level isolation, a customer admin portal, invitations, roles and permissions, a tamper-evident audit log, data export and erasure, plan entitlements, agent identities, and a readiness score with evidence for SOC 2, ISO 27001 and GDPR reviews.
 
-Matura never runs your application and never calls out to us. It is one Go binary (`maturad`), a Keycloak realm with a small Matura extension, Postgres, and optionally OpenFGA. It is commercial software, delivered as container images from our private registry and source-available to licensed customers.
+Matura never runs your application and never calls out to us. It is one Go binary (`maturad`), a Keycloak realm with a small Matura extension, Postgres, and optionally OpenFGA. Its core, SDKs and conformance CLI are Apache-2.0; the enterprise pack and support are commercial, and signed images are delivered from our registry.
 
 Two things Matura is not:
 

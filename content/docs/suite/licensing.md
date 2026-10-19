@@ -1,6 +1,6 @@
 ---
 title: Licensing and delivery
-description: How licences, images, updates and source access work for closed-source software you run yourself.
+description: How licences, images, updates and source access work for source-available software you run yourself.
 section: The suite
 order: 3
 updated: 2026-10-19
@@ -78,12 +78,12 @@ technical contacts on the licence.
 
 ## Source access
 
-- **Business and Enterprise** customers can request read access to the source under NDA for
-  security review and for building the images themselves in an air-gapped pipeline.
-- **Enterprise** agreements include source escrow with a neutral agent, released on the
-  conditions in the agreement.
-- Matura's **integration contract** (SDKs, SQL, webhook format, conformance tests) is
-  published openly so that any application can implement it without a licence.
+- **DevFlow and AgentCanvas** are published under the Fair Core License (FCL-1.0-ALv2).
+  Internal use is free; a licence key unlocks the enterprise features; offering the product
+  as a competing service is not allowed. Each release converts to Apache-2.0 two years after
+  it ships.
+- **Matura**'s core, SDKs and conformance CLI are Apache-2.0. The enterprise pack is commercial.
+- **Enterprise** agreements can add escrow for unreleased work with a neutral agent.
 
 ## Air-gapped installation
 

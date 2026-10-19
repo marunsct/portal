@@ -31,7 +31,7 @@ export const companyPage: Page = {
               AgentCanvas. When something is awkward, we feel it first.
             </p>
             <p>
-              The products are commercial and closed source, because that is how a small company funds years of
+              DevFlow and AgentCanvas are source-available under the Fair Core License, and Matura's core is Apache-2.0. Paid licences unlock the enterprise features, because that is how a small company funds years of
               unglamorous hardening work. The <em>contracts</em> are open: Matura&apos;s SDKs, SQL and conformance tests,
               AgentCanvas&apos;s exported projects, DevFlow&apos;s handover format. Nothing you build with us is locked to us.
             </p>

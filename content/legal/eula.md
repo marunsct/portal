@@ -2,7 +2,7 @@
 title: Software licence agreement
 description: The agreement that governs installation and use of DevFlow, AgentCanvas and Matura under a paid or evaluation licence.
 order: 3
-updated: 2026-10-19
+updated: 2026-10-20
 ---
 
 This is a summary of the standard agreement for reference. The signed order form and the
@@ -21,7 +21,7 @@ named users and the plan stated in the order form.
 - Serve your own customers and tenants with it without limit; end users are not counted.
 - Make copies for backup and for air-gapped installation.
 - Modify configuration, templates, stack packs, prompts and plugins provided for that purpose.
-- Review the source code where your plan includes source access, under the NDA.
+- Read, build and audit the source code, which is published under the licences listed in the help centre.
 
 ## 3. What you may not do
 
@@ -69,8 +69,10 @@ property, or liability that cannot be limited by law.
 
 ## 10. Escrow and source access
 
-Where the order form includes source access, the licensee may use the source only to
-review, audit and build the licensed product for its own use. Where it includes escrow, the
+The source code of each product is published: DevFlow and AgentCanvas under the Fair
+Core License (FCL-1.0-ALv2), converting to Apache-2.0 two years after each release, and
+Matura's core under Apache-2.0. This agreement governs the commercial licence keys and
+enterprise features; the public licences govern the source. Where it includes escrow, the
 escrow agreement states the release conditions.
 
 ## 11. Termination

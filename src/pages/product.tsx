@@ -145,7 +145,7 @@ export const productPage: Page = {
             <h2>Under the hood.</h2>
             <p className="muted" style={{ marginTop: 16 }}>
               Source: <a href={p.repo.url} rel="noopener">{p.repo.url.replace("https://", "")}</a>, branch{" "}
-              <span className="mono">{p.repo.branch}</span>. Source access is available to licensed customers.
+              <span className="mono">{p.repo.branch}</span>. Licence: {p.licence}.
             </p>
           </div>
           <div className="rows">

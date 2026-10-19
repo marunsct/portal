@@ -254,7 +254,7 @@ export const homePage: Page = {
             </p>
             <p>
               Regulated and public-sector customers can buy through a systems integrator, with air-gapped bundles,
-              source review under NDA and escrow. <Link href="/pricing">See plans and licensing</Link>.
+              source code you can read before you buy, and escrow. <Link href="/pricing">See plans and licensing</Link>.
             </p>
           </div>
         </div>
